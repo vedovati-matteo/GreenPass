@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.iot.cbor:cbor:0.01.02">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.iot.cbor/cbor/0.01.02/9ea6304f1ee3f7e434383f50e243195ba3b087b0/cbor-0.01.02.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.iot.cbor/cbor/0.01.02/334ceaf9fb6f78c1f69126ae476b80011e9abba9/cbor-0.01.02-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.iot.cbor/cbor/0.01.02/47de50bfd18b157461c06ba7c9f5de5d43e0fd56/cbor-0.01.02-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

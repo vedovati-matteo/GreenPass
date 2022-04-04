@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="validity"
+        android:summary="The App will automatically calculate the expiration day of all the Green Passes that don't explicitly have one."
+        android:title="Calculate Validity" />
+    <EditTextPreference
+        android:key="test_val"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Change validity duration of a Test (Days)"
+        app:useSimpleSummaryProvider="true"
+        android:inputType="numberDecimal"
+        android:digits="0123456789"
+        android:defaultValue="3"/>
+    <EditTextPreference
+        android:key="dose_val"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Change validity duration of the 2nd Dose (Months)"
+        app:useSimpleSummaryProvider="true"
+        android:inputType="numberDecimal"
+        android:digits="0123456789"
+        android:defaultValue="6"/>
+    <Preference
+        android:title=""
+        android:key="defaultBtn"
+        android:summary=""
+        android:widgetLayout="@layout/reset_settings_button"
+        />
+</PreferenceScreen>

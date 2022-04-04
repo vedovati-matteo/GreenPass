@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    style="@style/Widget.GreenPass.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.GreenPass.AppWidgetContainer"
+    android:backgroundTint="#90ECF0F1">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Green Pass of"
+        android:textColor="@color/strongGreen"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/strongGreen"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/qrCodeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/prevBtn"
+        android:layout_below="@id/nameText"
+        android:layout_marginTop="4dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageButton
+        android:id="@+id/prevBtn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rounded_corner"
+        android:padding="8dp"
+        android:src="@drawable/prev_arrow"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="4dp"/>
+
+    <ImageButton
+        android:id="@+id/nextBtn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rounded_corner"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/next_arrow"
+        android:layout_marginTop="4dp"/>
+
+
+</RelativeLayout>

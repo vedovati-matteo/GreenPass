@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.augustcellars.cose:cose-java:0.9.7">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.augustcellars.cose/cose-java/0.9.7/90e208074926ca884eb186595deea4f5c26a8c45/cose-java-0.9.7.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.augustcellars.cose/cose-java/0.9.7/a79dc5b746349440abd222fddaafbd7e311c3869/cose-java-0.9.7-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.augustcellars.cose/cose-java/0.9.7/77c386322cfec467c62fe683c7a81a5d31bf596a/cose-java-0.9.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

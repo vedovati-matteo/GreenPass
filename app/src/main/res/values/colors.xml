@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green">#2ECC71</color>
+    <color name="strongGreen">#27AE60</color>
+    <color name="strongGreenVar">#219250</color>
+
+    <color name="red">#E57373</color>
+    <color name="strongRed">#EF5350</color>
+
+    <color name="secondary">#EF5350</color>
+
+    <color name="white">#ECF0F1</color>
+    <color name="black">#212121</color>
+    212121
+    <color name="gray">#BDC3C7</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+
+
+</resources>

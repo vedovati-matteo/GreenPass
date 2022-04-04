@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.upokecenter:cbor:2.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.upokecenter/cbor/2.4.1/5774991b436c31fb6ef4ef44dd6463b6673e80d4/cbor-2.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.upokecenter/cbor/2.4.1/992294f0e7e8e434a134b371b66e8b0ba1964485/cbor-2.4.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.upokecenter/cbor/2.4.1/533ac06e389a297610704b31fd41c96a9fd4ec07/cbor-2.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
