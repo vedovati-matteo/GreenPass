@@ -1,2 +1,2 @@
 # GreenPass
-Progetto di test triennale di Vedovati Matteo
+Progetto di tesi triennale di Vedovati Matteo
