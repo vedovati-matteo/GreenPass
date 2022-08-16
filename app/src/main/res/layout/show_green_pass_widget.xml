@@ -62,5 +62,11 @@
         android:src="@drawable/next_arrow"
         android:layout_marginTop="4dp"/>
 
-
+    <TextView
+        android:id="@+id/addInfoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/qrCodeView"
+        android:layout_centerHorizontal="true"
+        android:textSize="14sp"/>
 </RelativeLayout>

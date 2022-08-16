@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toTopOf="@+id/delBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/doseText"
+        app:layout_constraintTop_toBottomOf="@+id/text4"
         tools:srcCompat="@tools:sample/avatars" />
 
 
@@ -62,23 +62,23 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/date1Text"
+        android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:fontFamily="sans-serif-condensed-light"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/birthText" />
+        app:layout_constraintTop_toBottomOf="@+id/text1" />
 
     <TextView
-        android:id="@+id/birthText"
+        android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-condensed-light"
-        android:text="Date of Birth: "
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
     <TextView
-        android:id="@+id/doseText"
+        android:id="@+id/text4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -97,17 +97,17 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date2Text" />
+        app:layout_constraintTop_toBottomOf="@+id/text3" />
 
     <TextView
-        android:id="@+id/date2Text"
+        android:id="@+id/text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="sans-serif-condensed-light"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date1Text" />
+        app:layout_constraintTop_toBottomOf="@+id/text2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

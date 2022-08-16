@@ -1,7 +1,5 @@
 package com.example.greenpass;
 
-import static com.example.greenpass.Global.PREFS_NAME;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
@@ -35,13 +33,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         // get all the Green Pass identifiers into a list
-        usersData = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
+        usersData = getApplicationContext().getSharedPreferences(Global.PREFS_NAME, 0);
         String qrCodeListStr = usersData.getString(Global.QR_LIST, "");
-        if (qrCodeListStr.equals("")) { // if list is empty do nothing
-            return;
-        }
+        // if list is empty do nothing
+        if (qrCodeListStr.equals("")) return;
         qrCodeList = Arrays.asList(qrCodeListStr.split(";"));
 
         // create Green Pass cards in RecyclerView
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         // Drag and Drop handler for the cards
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
@@ -109,14 +109,13 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.getWidget:
                         getWidget();
-                        return true;
+                        break;
                     case R.id.settings:
                         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                         startActivity(i);
-                        return true;
-                    default:
-                        return true;
+                        break;
                 }
+                return true;
             }
         });
         popup.show();

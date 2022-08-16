@@ -7,15 +7,7 @@
         android:key="validity"
         android:summary="The App will automatically calculate the expiration day of all the Green Passes that don't explicitly have one."
         android:title="Calculate Validity" />
-    <EditTextPreference
-        android:key="test_val"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="Change validity duration of a Test (Days)"
-        app:useSimpleSummaryProvider="true"
-        android:inputType="numberDecimal"
-        android:digits="0123456789"
-        android:defaultValue="3"/>
+
     <EditTextPreference
         android:key="dose_val"
         android:selectAllOnFocus="true"
@@ -25,6 +17,26 @@
         android:inputType="numberDecimal"
         android:digits="0123456789"
         android:defaultValue="6"/>
+
+    <EditTextPreference
+        android:key="rapid_val"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Change validity duration of a Rapid Test (Days)"
+        app:useSimpleSummaryProvider="true"
+        android:inputType="numberDecimal"
+        android:digits="0123456789"
+        android:defaultValue="2"/>
+    <EditTextPreference
+        android:key="molecular_val"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Change validity duration of a Molecular Test (Days)"
+        app:useSimpleSummaryProvider="true"
+        android:inputType="numberDecimal"
+        android:digits="0123456789"
+        android:defaultValue="3"/>
+
     <Preference
         android:title=""
         android:key="defaultBtn"

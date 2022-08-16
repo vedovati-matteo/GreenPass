@@ -69,8 +69,7 @@ public class AddQrCodeActivity extends AppCompatActivity {
 
     // pressed PDF button
     public void getPdf(View view) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("application/pdf");
         startActivityForResult(intent, SELECT_PDF);
@@ -79,7 +78,6 @@ public class AddQrCodeActivity extends AppCompatActivity {
     // pressed CAMERA button
     public void getCamera(View view) {
         IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setOrientationLocked(false);
         integrator.setPrompt("Scan the Green Pass");
         integrator.setCaptureActivity(CaptureActivityPortrait.class);
         integrator.initiateScan();
@@ -100,9 +98,11 @@ public class AddQrCodeActivity extends AppCompatActivity {
                         // read qrcode
                         InputStream is = new BufferedInputStream(getContentResolver().openInputStream(fileUri));
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        String decoded = scanQRImage(bitmap);
+                        String content = scanQRImage(bitmap);
+
+
                         // extract and store data
-                        getDataFromQrcode(decoded, bitmap);
+                        getDataFromQrcode(content, bitmap);
                     }
                     break;
                 case SELECT_PDF:
@@ -122,18 +122,18 @@ public class AddQrCodeActivity extends AppCompatActivity {
                         page.render(pageBitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 
                         // Scan bitmap for qrcode
-                        String decoded = scanQRImage(pageBitmap);
+                        String content = scanQRImage(pageBitmap);
 
                         // recreate bitmap from decoded string
                         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                         BitMatrix bitMatrix;
                         Map<EncodeHintType, Object> hintMap = new HashMap<EncodeHintType, Object>();
                         hintMap.put(EncodeHintType.MARGIN, new Integer(1));
-                        bitMatrix = multiFormatWriter.encode(decoded, BarcodeFormat.QR_CODE,500,500, hintMap);
+                        bitMatrix = multiFormatWriter.encode(content, BarcodeFormat.QR_CODE,500,500, hintMap);
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                         // extract and store data
-                        getDataFromQrcode(decoded, bitmap);
+                        getDataFromQrcode(content, bitmap);
                     }
                     break;
                 case IntentIntegrator.REQUEST_CODE:
@@ -164,9 +164,7 @@ public class AddQrCodeActivity extends AppCompatActivity {
         }
 
         // return to main activity
-        Intent i=new Intent(this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+        finish();
     }
 
     // scan image for qrcode
@@ -188,14 +186,14 @@ public class AddQrCodeActivity extends AppCompatActivity {
         return contents;
     }
 
-    private void getDataFromQrcode(String decoded, Bitmap bitmap) throws Exception {
+    private void getDataFromQrcode(String content, Bitmap bitmap) throws Exception {
         // decode qrcode
         // remove prefix
-        String withoutPrefix = decoded.substring(4);
+        String withoutPrefix = content.substring(4);
         // decode base45
         byte[] bytecompressed = Base45.getDecoder().decode(withoutPrefix);
 
-        // Inflate the compressed String
+        // decompress String
         Inflater inflater = new Inflater();
         inflater.setInput(bytecompressed);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(bytecompressed.length);
@@ -216,10 +214,8 @@ public class AddQrCodeActivity extends AppCompatActivity {
         // __GET attributes needed
         // get name
         String name = jsonData.getJSONObject("nam").getString("fn") + " " + jsonData.getJSONObject("nam").getString("gn");
-        // get date of birth
-        String dob = LocalDate.parse(jsonData.getString("dob")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        String type, identifier, storeString = name + ";" + dob;
+        String type, identifier, storeString = name;
 
         if (jsonData.has("v")) {
             // vaccinated
@@ -238,6 +234,14 @@ public class AddQrCodeActivity extends AppCompatActivity {
             // tested
             type = "t";
             JSONObject t = jsonData.getJSONArray("t").getJSONObject(0);
+            // get type of test
+            String testType = "";
+            if (t.has("ma") && !t.getString("ma").equals("")) { // is a rapid test
+                testType = "r";
+            } else { // is a molecular test
+                testType = "m";
+            }
+
             // get test date and time
             ZonedDateTime dateTime = ZonedDateTime.parse(t.getString("sc"));
             String date = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -245,7 +249,7 @@ public class AddQrCodeActivity extends AppCompatActivity {
             // get unique identifier
             identifier = t.getString("ci");
 
-            storeString += ";" + type + ";" + date + ";" + time;
+            storeString += ";" + type + ";" + testType + ";" + date + ";" + time;
 
         } else if (jsonData.has("r")) {
             // recovery

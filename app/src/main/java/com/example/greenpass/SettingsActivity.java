@@ -52,7 +52,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         // if not validity, disable other settings
         if (!prefs.getBoolean(Global.S_KEY_validity, true)) {
-            getPreferenceScreen().findPreference(Global.S_KEY_test).setEnabled(false);
+            getPreferenceScreen().findPreference(Global.S_KEY_test_rapid).setEnabled(false);
+            getPreferenceScreen().findPreference(Global.S_KEY_test_molecular).setEnabled(false);
             getPreferenceScreen().findPreference(Global.S_KEY_2dose).setEnabled(false);
             getPreferenceScreen().findPreference(Global.S_KEY_resetBtn).setEnabled(false);
         }
@@ -62,11 +63,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 if (key.equals(Global.S_KEY_validity)) {
                     if (prefs.getBoolean(key, true)) {
-                        getPreferenceScreen().findPreference(Global.S_KEY_test).setEnabled(true);
+                        getPreferenceScreen().findPreference(Global.S_KEY_test_rapid).setEnabled(true);
+                        getPreferenceScreen().findPreference(Global.S_KEY_test_molecular).setEnabled(true);
                         getPreferenceScreen().findPreference(Global.S_KEY_2dose).setEnabled(true);
                         getPreferenceScreen().findPreference(Global.S_KEY_resetBtn).setEnabled(true);
                     } else {
-                        getPreferenceScreen().findPreference(Global.S_KEY_test).setEnabled(false);
+                        getPreferenceScreen().findPreference(Global.S_KEY_test_rapid).setEnabled(false);
+                        getPreferenceScreen().findPreference(Global.S_KEY_test_molecular).setEnabled(false);
                         getPreferenceScreen().findPreference(Global.S_KEY_2dose).setEnabled(false);
                         getPreferenceScreen().findPreference(Global.S_KEY_resetBtn).setEnabled(false);
                     }
@@ -84,11 +87,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public void resetVals(View view) {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(Global.S_KEY_test, Integer.toString(Global.DURATION_TEST));
+        editor.putString(Global.S_KEY_test_rapid, Integer.toString(Global.DURATION_TEST_RAPID));
+        editor.putString(Global.S_KEY_test_molecular, Integer.toString(Global.DURATION_TEST_MOLECULAR));
         editor.putString(Global.S_KEY_2dose, Integer.toString(Global.DURATION_DOSE));
         editor.apply();
         finish();
-        startActivity(getIntent());
+        //startActivity(getIntent());
     }
 
 }

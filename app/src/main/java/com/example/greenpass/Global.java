@@ -13,7 +13,8 @@ public class Global {
 
     // settings SharedPreferences
     public static String S_KEY_validity = "validity";
-    public static String S_KEY_test = "test_val";
+    public static String S_KEY_test_rapid = "rapid_val";
+    public static String S_KEY_test_molecular = "molecular_val";
     public static String S_KEY_2dose = "dose_val";
     public static String S_KEY_resetBtn = "defaultBtn";
 
@@ -29,7 +30,8 @@ public class Global {
     // duration 2nd dose
     public static final int DURATION_DOSE = 6;
     // duration test
-    public static final int DURATION_TEST = 3;
+    public static final int DURATION_TEST_RAPID = 2;
+    public static final int DURATION_TEST_MOLECULAR = 3;
 
     // function that return the expiration date giving starting date and number of month/day
     public static String getExpireDate(String date, int num, boolean month) {

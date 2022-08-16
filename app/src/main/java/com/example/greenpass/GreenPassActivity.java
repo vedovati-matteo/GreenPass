@@ -8,6 +8,7 @@ import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,7 +56,7 @@ public class GreenPassActivity extends AppCompatActivity {
         // get if we need to calculate the validity
         boolean validity = spSettings.getBoolean(Global.S_KEY_validity, true);
 
-        // get data list: name[0];DoB[1];type[2];date[3];(nDose/time/dateUntil)[4];filePath[5]
+        // get data list: name[0];type[1];date[2];(nDose/time/dateUntil)[3];filePath[4]
         String data = usersData.getString(identifier, "error");
         List<String> dataList = Arrays.asList(data.split(";"));
         if (dataList.get(0).equals("error")) {
@@ -63,29 +64,28 @@ public class GreenPassActivity extends AppCompatActivity {
         }
         // output text
         TextView name = (TextView) findViewById(R.id.nameText);
-        TextView birth = (TextView) findViewById(R.id.birthText);
-        TextView date1 = (TextView) findViewById(R.id.date1Text);
-        TextView date2 = (TextView) findViewById(R.id.date2Text);
-        TextView dose = (TextView) findViewById(R.id.doseText);
+        TextView text1 = (TextView) findViewById(R.id.text1);
+        TextView text2 = (TextView) findViewById(R.id.text2);
+        TextView text3 = (TextView) findViewById(R.id.text3);
+        TextView text4 = (TextView) findViewById(R.id.text4);
 
         ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.qrcodeLayout);
 
         name.setText(dataList.get(0)); // name
-        birth.setText(birth.getText() + dataList.get(1)); // date of birth
 
         String supp;
-        switch (dataList.get(2)) {
+        switch (dataList.get(1)) {
             case "v": // VACCINE
-                date1.setText("Vaccination date: " + dataList.get(3)); // vaccination date
+                text1.setText("Vaccination date: " + dataList.get(2)); // vaccination date
 
                 // if needed calculate the validity
                 if (validity) {
                     supp = "";
-                    if (dataList.get(4).equals("1")) {
+                    if (dataList.get(3).equals("1")) {
                         supp = "Valid until 2nd Dose";
-                    } else if (dataList.get(4).equals("2")) {
+                    } else if (dataList.get(3).equals("2")) {
                         int duration = Integer.parseInt(spSettings.getString(Global.S_KEY_2dose, Integer.toString(Global.DURATION_DOSE)));
-                        String expDate = Global.getExpireDate(dataList.get(3), duration, true);
+                        String expDate = Global.getExpireDate(dataList.get(2), duration, true);
                         if (Global.isExpired(expDate)) {
                             layout.setBackgroundColor(getResources().getColor(R.color.red));
                             Toast toast = Toast.makeText(this, "Green Pass Expired", Toast.LENGTH_SHORT);
@@ -93,49 +93,57 @@ public class GreenPassActivity extends AppCompatActivity {
                         }
                         supp = "Valid until: " + expDate;
                     }
-                    date2.setText(supp);
+                    text2.setText(supp);
                 }
 
                 // number of dose
                 supp = "";
-                if (dataList.get(4).equals("1")) {
+                if (dataList.get(3).equals("1")) {
                     supp = "st";
-                } else if (dataList.get(4).equals("2")) {
+                } else if (dataList.get(3).equals("2")) {
                     supp = "nd";
-                } else if (dataList.get(4).equals("3")) {
+                } else if (dataList.get(3).equals("3")) {
                     supp = "rd";
                 }
-                dose.setText(dataList.get(4) + supp + " dose");
+                text3.setText(dataList.get(3) + supp + " dose");
+                text3.setTypeface(null, Typeface.BOLD);
 
                 break;
             case "t": // TEST
-                date1.setText("Test date: " + dataList.get(3)); // test date
+                text1.setText("Test date: " + dataList.get(3)); // test date
 
                 // if needed calculate the validity
                 if (validity) {
-                    int duration = Integer.parseInt(spSettings.getString(Global.S_KEY_test, Integer.toString(Global.DURATION_TEST)));
+                    int duration;
+                    if (dataList.get(2).equals("r")) { // rapid test
+                        duration = Integer.parseInt(spSettings.getString(Global.S_KEY_test_rapid, Integer.toString(Global.DURATION_TEST_RAPID)));
+                        text4.setText("Rapid Test");
+                    } else { // molecular test
+                        duration = Integer.parseInt(spSettings.getString(Global.S_KEY_test_molecular, Integer.toString(Global.DURATION_TEST_MOLECULAR)));
+                        text4.setText("Molecular Test");
+                    }
                     String expDate = Global.getExpireDate(dataList.get(3), duration, false);
                     if (Global.isExpired(expDate)) {
                         layout.setBackgroundColor(getResources().getColor(R.color.red));
                         Toast toast = Toast.makeText(this, "Green Pass Expired", Toast.LENGTH_SHORT);
                         toast.show();
                     }
-                    date2.setText("Valid until: " + expDate);
+                    text2.setText("Valid until: " + expDate);
                 }
 
-                dose.setText("Test time: " + dataList.get(4)); // test time
+                text3.setText("Test time: " + dataList.get(4)); // test time
 
                 break;
             case "r": // RECOVERY
-                date1.setText("Recovery date: " + dataList.get(3)); // recovery date
+                text2.setText("Recovery date: " + dataList.get(2)); // recovery date
 
-                if (Global.isExpired(dataList.get(4))) { // if expired
+                if (Global.isExpired(dataList.get(3))) { // if expired
                     layout.setBackgroundColor(getResources().getColor(R.color.red));
                     Toast toast = Toast.makeText(this, "Green Pass Expired", Toast.LENGTH_SHORT);
                     toast.show();
                 }
 
-                date2.setText("Valid until: " + dataList.get(4)); // validity
+                text3.setText("Valid until: " + dataList.get(3)); // validity
 
                 break;
             default: // if cannot recognize the type retun to the Main Activity
@@ -146,7 +154,7 @@ public class GreenPassActivity extends AppCompatActivity {
         // output image
         ImageView qrCode = (ImageView) findViewById(R.id.qrCodeView);
 
-        imagePath = dataList.get(5);
+        imagePath = dataList.get(dataList.size() - 1);
 
         Glide.with(this)
                 .load(imagePath)
@@ -192,8 +200,6 @@ public class GreenPassActivity extends AppCompatActivity {
         img.delete();
 
         // return to main activity
-        Intent i=new Intent(this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+        finish();
     }
 }

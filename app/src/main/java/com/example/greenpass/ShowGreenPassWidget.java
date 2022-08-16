@@ -10,7 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.text.Html;
 import android.widget.RemoteViews;
+
+import androidx.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.AppWidgetTarget;
@@ -82,7 +85,6 @@ public class ShowGreenPassWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
         // get first Identifier
         SharedPreferences usersData = context.getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
         String qrListStr = usersData.getString(Global.QR_LIST, "");
@@ -124,8 +126,15 @@ public class ShowGreenPassWidget extends AppWidgetProvider {
             List<String> dataList = Arrays.asList(dataStr.split(";"));
             views.setTextViewText(R.id.nameText, dataList.get(0));
 
+            // set additional info text
+            SharedPreferences spSettings = PreferenceManager.getDefaultSharedPreferences(context);
+
+            List<String> addTextList = GreenPassCardViewAdapter.getAdditionalInfo(dataList, spSettings);
+            String addInfoText = "<p style='text-align:center'>" + addTextList.get(0) + " <br> " + addTextList.get(1) + "</p>";
+            views.setTextViewText(R.id.addInfoText, Html.fromHtml(addInfoText));
+
             // load image
-            String imagePath = dataList.get(5);
+            String imagePath = dataList.get(dataList.size() - 1);
 
             AppWidgetTarget appWidgetTarget = new AppWidgetTarget(context, R.id.qrCodeView, views, appWidgetId) {
                 @Override
@@ -154,12 +163,18 @@ public class ShowGreenPassWidget extends AppWidgetProvider {
     // get next/prev position
     protected int getNeededPos(String currId, List<String> idList, boolean next) {
         int pos = 0;
+        boolean found = false;
 
         for (String entry : idList) {
             if (entry.equals(currId)) {
+                found = true;
                 break;
             }
             pos++;
+        }
+
+        if(!found) {
+            return 0;
         }
 
         int neededPos;
